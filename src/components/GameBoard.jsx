@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const initialGameBoard = [
   [null, null, null],
@@ -6,29 +6,31 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-const GameBoard = ({ onSelectGameBoard }) => {
+const GameBoard = ({ onSelectGameBoard, turns }) => {
+  /*
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
-  3;
-  // const handleButtonClick = (rowIndex, colIndex) => {
-  //   setGameBoard((previousGameBoard) => {
-  //     const updatedBoard = [
-  //       ...previousGameBoard.map((innerArray) => [...innerArray]),
-  //     ];
-  //     updatedBoard[rowIndex][colIndex] = "X";
-  //     return updatedBoard;
-  //   });
-  // };
 
   const handleButtonClick = (rowIndex, colIndex) => {
     setGameBoard((previousGameBoard) => {
       const updatedBoard = [
         ...previousGameBoard.map((innerArray) => [...innerArray]),
       ];
-      updatedBoard[rowIndex][colIndex] = "X";
+      updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
       return updatedBoard;
     });
     onSelectGameBoard();
   };
+*/
+
+  // This concept is called deriving the states from the props
+  let gameBoard = initialGameBoard;
+
+  for (const turn of turns) {
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  }
 
   return (
     <>
@@ -38,7 +40,7 @@ const GameBoard = ({ onSelectGameBoard }) => {
             <ol>
               {row.map((playerSymbol, colIndex) => (
                 <li key={colIndex}>
-                  <button onClick={() => handleButtonClick(rowIndex, colIndex)}>
+                  <button onClick={() => onSelectGameBoard(rowIndex, colIndex)}>
                     {playerSymbol}
                   </button>
                 </li>
