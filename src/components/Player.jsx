@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
-const Player = ({ name, symbol }) => {
+const Player = ({ initialName, symbol, isActive }) => {
+  const [playerName, setPlayerName] = useState(initialName);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -13,6 +15,10 @@ const Player = ({ name, symbol }) => {
     setIsEditing((editing) => !editing); // Best Practice
   };
 
+  const hancleChange = (event) => {
+    setPlayerName(event.target.value);
+  };
+
   //   let playerName = <span className="player-name">{name}</span>;
   //   if (isEditing) {
   //     playerName = <input type="text" required></input>;
@@ -20,14 +26,19 @@ const Player = ({ name, symbol }) => {
 
   return (
     <>
-      <li>
+      <li className={isActive ? "active" : undefined}>
         <span className="player">
           {/* {playerName} */}
           {/* Either use the above code or the code. playerName below. the ternary operator condition check */}
           {isEditing ? (
-            <input type="text" required value={name}></input>
+            <input
+              type="text"
+              required
+              value={playerName}
+              onChange={hancleChange}
+            />
           ) : (
-            <span className="player-name">{name}</span>
+            <span className="player-name">{playerName}</span>
           )}
           <span className="player-symbol">{symbol}</span>
         </span>
