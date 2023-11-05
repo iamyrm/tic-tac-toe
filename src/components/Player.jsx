@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Player = ({ initialName, symbol, isActive }) => {
+const Player = ({ initialName, symbol, isActive, onPlayerChangeName }) => {
   const [playerName, setPlayerName] = useState(initialName);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -13,6 +13,9 @@ const Player = ({ initialName, symbol, isActive }) => {
     // If your state is updation on the basis of older state then use an arrow function instead of the codes shown above.
 
     setIsEditing((editing) => !editing); // Best Practice
+    if (isEditing) {
+      onPlayerChangeName(symbol, playerName);
+    }
   };
 
   const hancleChange = (event) => {
